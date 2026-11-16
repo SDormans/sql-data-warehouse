@@ -1,4 +1,4 @@
-﻿# **Naming Conventions**
+# **Naming Conventions**
 
 This document outlines the naming conventions used for schemas, tables, views, columns, and other objects in the data warehouse.
 
@@ -12,7 +12,8 @@ This document outlines the naming conventions used for schemas, tables, views, c
 3. [Column Naming Conventions](#column-naming-conventions)
    - [Surrogate Keys](#surrogate-keys)
    - [Technical Columns](#technical-columns)
-4. [Stored Procedure](#stored-procedure-naming-conventions)
+4. [Stored Procedures](#stored-procedures)
+
 ---
 
 ## **General Principles**
@@ -50,7 +51,7 @@ This document outlines the naming conventions used for schemas, tables, views, c
 
 | Pattern     | Meaning                           | Example(s)                              |
 |-------------|-----------------------------------|-----------------------------------------|
-| `dim_`      | Dimension table                  | `dim_customer`, `dim_product`           |
+| `dim_`      | Dimension table                  | `dim_customers`, `dim_products`         |
 | `fact_`     | Fact table                       | `fact_sales`                            |
 | `report_`   | Report table                     | `report_customers`, `report_sales_monthly`   |
 
@@ -70,12 +71,13 @@ This document outlines the naming conventions used for schemas, tables, views, c
   - `<column_name>`: Descriptive name indicating the column's purpose.  
   - Example: `dwh_load_date` → System-generated column used to store the date when the record was loaded.
  
-## **Stored Procedure**
+## **Stored Procedures**
 
 - All stored procedures used for loading data must follow the naming pattern:
-- **`load_<layer>`**.
-  
+- **`load_<layer>[_<sourcesystem>]`**
   - `<layer>`: Represents the layer being loaded, such as `bronze`, `silver`, or `gold`.
-  - Example: 
-    - `load_bronze` → Stored procedure for loading data into the Bronze layer.
-    - `load_silver` → Stored procedure for loading data into the Silver layer.
+  - `<sourcesystem>` (optional): Used when a layer is loaded per source system (e.g., `crm`, `erp`).
+  - Examples:
+    - `bronze.load_bronze_crm` → Loads CRM data into the Bronze layer.
+    - `bronze.load_bronze_erp` → Loads ERP data into the Bronze layer.
+    - `silver.load_silver` → Loads data into the Silver layer.

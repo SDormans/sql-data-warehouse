@@ -1,9 +1,9 @@
 /*
 ===============================================================================
-Stored Procedure: Load Bronze Layer (Source -> Bronze)
+Stored Procedure: Load Bronze Layer - CRM (Source -> Bronze)
 ===============================================================================
 Script Purpose:
-    This stored procedure loads data into the 'bronze' schema from external CSV files. 
+    This stored procedure loads CRM data into the 'bronze' schema from external CSV files. 
     It performs the following actions:
     - Truncates the bronze tables before loading data.
     - Uses the `BULK INSERT` command to load data from csv Files to bronze tables.
@@ -13,7 +13,7 @@ Parameters:
 	  This stored procedure does not accept any parameters or return any values.
 
 Usage Example:
-    EXEC bronze.load_bronze;
+    EXEC bronze.load_bronze_crm;
 ===============================================================================
 */
 CREATE OR ALTER PROCEDURE bronze.load_bronze_crm AS
@@ -22,7 +22,7 @@ BEGIN
 	BEGIN TRY
 		SET @batch_start_time = GETDATE();
 		PRINT '================================================';
-		PRINT 'Loading Bronze Layer';
+		PRINT 'Loading Bronze Layer (CRM)';
 		PRINT '================================================';
 
 		PRINT '------------------------------------------------';
@@ -78,16 +78,16 @@ BEGIN
 
 		SET @batch_end_time = GETDATE();
 		PRINT '=========================================='
-		PRINT 'Loading Bronze Layer is Completed';
+		PRINT 'Loading Bronze Layer (CRM) is Completed';
         PRINT '   - Total Load Duration: ' + CAST(DATEDIFF(SECOND, @batch_start_time, @batch_end_time) AS NVARCHAR) + ' seconds';
 		PRINT '=========================================='
 	END TRY
 	BEGIN CATCH
 		PRINT '=========================================='
-		PRINT 'ERROR OCCURED DURING LOADING BRONZE LAYER'
-		PRINT 'Error Message' + ERROR_MESSAGE();
-		PRINT 'Error Message' + CAST (ERROR_NUMBER() AS NVARCHAR);
-		PRINT 'Error Message' + CAST (ERROR_STATE() AS NVARCHAR);
+		PRINT 'ERROR OCCURRED DURING LOADING BRONZE LAYER (CRM)'
+		PRINT 'Error Message: ' + ERROR_MESSAGE();
+		PRINT 'Error Number: ' + CAST(ERROR_NUMBER() AS NVARCHAR);
+		PRINT 'Error State: ' + CAST(ERROR_STATE() AS NVARCHAR);
 		PRINT '=========================================='
 	END CATCH
 END
